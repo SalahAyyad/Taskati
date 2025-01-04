@@ -5,7 +5,7 @@ import 'package:taskati/core/utils/colors.dart';
 TextStyle getTiltleTextStyle ({double? fontSize, Color? color, fontWeight}){
 return TextStyle(
   fontSize: fontSize ?? 30,
-  color: AppColor.primaryColor,
+  color: color ?? AppColor.primaryColor,
   fontWeight: FontWeight.bold,
 );
 
@@ -14,7 +14,7 @@ return TextStyle(
 TextStyle getBodyTextStyle ({double? fontSize, Color? color, fontWeight}){
 return TextStyle(
   fontSize: fontSize ?? 24,
-  color: AppColor.greycolor,
+  color: color?? AppColor.greycolor,
   fontWeight: FontWeight.bold
 );
 

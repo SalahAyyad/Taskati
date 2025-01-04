@@ -3,12 +3,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskati/core/functions/navigations.dart';
 import 'package:taskati/core/utils/colors.dart';
 import 'package:taskati/core/utils/textstyle.dart';
 import 'package:taskati/core/widgets/custome_button.dart';
-import 'package:taskati/features/homeScreen.dart';
+import 'package:taskati/features/home_screen.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -27,9 +28,14 @@ class _UploadScreenState extends State<UploadScreen> {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {
-              if (formkey.currentState!.validate()&&  path!= null) {
-               pushTo(context, Homescreen());
+            onPressed: () async{
+              if (formkey.currentState!.validate() &&  path!= null) {
+                
+                var userBox = Hive.box('user');
+                userBox.put('name', nameController.text);
+                userBox.put('image',path);
+                userBox.put('isUploaded',true);
+               pushTo(context, HomeScreen());
               } else if(path == null){
 
                 showDialog(context: context, builder: (context){
@@ -117,7 +123,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "name is required";
-                      } else if (RegExp('^[A-Z][a-z]{2,8}').hasMatch(value)) {
+                      } else if (value.length<3) {
                         return "min is 3";
                       }
                       return null;
