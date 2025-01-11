@@ -18,4 +18,7 @@ class TaskModel {
     required this.color,
     required this.isCompleted,
   });
+
+
 }
+

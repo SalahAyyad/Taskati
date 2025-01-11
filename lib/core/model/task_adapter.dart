@@ -23,6 +23,7 @@ class TaskAdapter extends TypeAdapter<TaskModel> {
     writer.writeString(obj.id);
     writer.writeString(obj.title);
     writer.writeString(obj.note);
+    writer.writeString(obj.date);
     writer.writeString(obj.startTime);
     writer.writeString(obj.endTime);
     writer.writeInt(obj.color);

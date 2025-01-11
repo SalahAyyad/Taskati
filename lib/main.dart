@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 
 import 'package:hive_flutter/adapters.dart';
 import 'package:taskati/core/model/task_adapter.dart';
+import 'package:taskati/core/model/task_model.dart';
 import 'package:taskati/core/utils/colors.dart';
 import 'package:taskati/features/into/splash_screen.dart';
 
 void main() async {
-  WidgetsFlutterBinding();
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
   await Hive.openBox('user');
-  await Hive.openBox('task');
+  await Hive.openBox<TaskModel>('task');
+  await Hive.openBox<TaskModel>('completed_taskes');
 
   runApp(MainApp());
 }

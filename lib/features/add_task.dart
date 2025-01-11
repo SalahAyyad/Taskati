@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:math';
 
-import 'package:date_picker_timeline/persian_date/persian_number.dart';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:taskati/core/functions/navigations.dart';
+import 'package:taskati/core/model/task_adapter.dart';
 import 'package:taskati/core/model/task_model.dart';
 import 'package:taskati/core/utils/colors.dart';
 import 'package:taskati/core/utils/textstyle.dart';
@@ -30,6 +32,23 @@ class _AddTaskState extends State<AddTask> {
       text: DateFormat("hh :mm a").format(DateTime.now()));
   var endTimeController = TextEditingController(
       text: DateFormat("hh :mm a").format(DateTime.now()));
+
+      TimeOfDay starttime = TimeOfDay.now();
+      TimeOfDay endTime = TimeOfDay.now();
+
+
+
+
+bool isBefore(TimeOfDay time1, TimeOfDay time2) {
+
+ int minutes1 = time1.hour * 60 + time1.minute;
+
+ int minutes2 = time2.hour * 60 + time2.minute;
+
+ return minutes1 < minutes2;
+
+}
+
 
   int selectedColor = 0;
   @override
@@ -105,7 +124,7 @@ class _AddTaskState extends State<AddTask> {
                           .then((value) {
                         if (value != null) {
                           dateController.text =
-                              DateFormat("dd/MM/yyyy ").format(value);
+                              DateFormat("dd MMM yyyy").format(value);
                         }
                       });
                     },
@@ -138,6 +157,8 @@ class _AddTaskState extends State<AddTask> {
                                 if (value != null) {
                                   startTimeController.text =
                                       value.format(context);
+
+                                     starttime = value;
                                 }
                               });
                             },
@@ -162,11 +183,12 @@ class _AddTaskState extends State<AddTask> {
                             onTap: () {
                               showTimePicker(
                                       context: context,
-                                      initialTime: TimeOfDay.now())
+                                      initialTime:  TimeOfDay.now())
                                   .then((value) {
                                 if (value != null) {
                                   endTimeController.text =
                                       value.format(context);
+                                      endTime = value;
                                 }
                               });
                             },
@@ -214,23 +236,12 @@ class _AddTaskState extends State<AddTask> {
                       customeButton(
                         text: 'create task',
                         onPressed: () {
+                          print('$endTime , $starttime');
                           if (formKey.currentState!.validate()) {
-                            TaskModel newtask = TaskModel(
-                              id: DateTime.now().toString(),
-                              title: titleController.text,
-                              note: noteController.text,
-                              date: dateController.text,
-                              startTime: startTimeController.text,
-                              endTime: endTimeController.text,
-                              color: selectedColor,
-                              isCompleted: false,
-                            );
-                            var taskbox = Hive.box('task');
-                            taskbox.put(newtask.id, newtask);
                             
-                          
-                            /*if (true) {
-                              print('it gave true');
+
+                            if (isBefore(endTime, starttime)) {
+                              
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: Text(
@@ -243,12 +254,29 @@ class _AddTaskState extends State<AddTask> {
                                 behavior: SnackBarBehavior.floating,
                               ));
                             }
-                            else {*/
-                              pushWithReplacment(context, HomeScreen());
-                            //}
+                            else {
+                              
+
+
+                              TaskModel newtask = TaskModel(
+                              id: DateTime.now().toString(),
+                              title: titleController.text,
+                              note: noteController.text,
+                              date: dateController.text,
+                              startTime: startTimeController.text,
+                              endTime: endTimeController.text,
+                              color: selectedColor,
+                              isCompleted: false,
+                            );
+                            var taskbox = Hive.box<TaskModel>('task');
+                           
+                            taskbox.put(newtask.id, newtask);
+                            pushWithReplacment(context, HomeScreen());
+                            
+                            }
                           }
-                        },
-                        width: 150,
+                        }
+                        
                       )
                     ],
                   ),

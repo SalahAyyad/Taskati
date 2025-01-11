@@ -8,6 +8,8 @@ import 'package:hive/hive.dart';
 import 'package:taskati/features/completed_tasks.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
@@ -50,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 TextButton(
                   
                     onPressed: () {
-                      pushTo(context, CompletedTasks());
+                      pushTo(context, const CompletedTasks());
                     },
                     child: Text(
                       'this many tasks',

@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:date_picker_timeline/extra/color.dart';
 import 'package:flutter/material.dart';
 import 'package:taskati/core/model/task_model.dart';
 import 'package:taskati/core/utils/colors.dart';
 import 'package:taskati/core/utils/textstyle.dart';
 
 class taskItem extends StatelessWidget {
-
+   
   final TaskModel task;
-  const taskItem({
+    taskItem({
     super.key,
     required this.task,
     
@@ -24,7 +25,8 @@ class taskItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           color: task.color == 0? AppColor.primaryColor 
           : task.color == 1 ? AppColor.orangeColor
-          : AppColor.redColor),
+          : task.color == 2? AppColor.redColor
+          : AppColor.greenColor),
       child: Row(
         children: [
           Column(
