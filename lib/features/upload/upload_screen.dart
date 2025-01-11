@@ -54,7 +54,7 @@ class _UploadScreenState extends State<UploadScreen> {
                 
               }
             ,
-            child: Text('Done', style: getSmallTextStyle()),
+            child: Text('Done', style: getSmallTextStyle(color: AppColor.whitecolor)),
           )
         ],
       ),
