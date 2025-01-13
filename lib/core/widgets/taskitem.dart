@@ -19,6 +19,8 @@ class taskItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 85,
+      
+      
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(bottom: 10,left: 5,right: 5),
       decoration: BoxDecoration(
@@ -61,7 +63,7 @@ class taskItem extends StatelessWidget {
           ),
           Spacer(),
           VerticalDivider(
-            color: AppColor.whitecolor,
+            
             thickness: 3,
             width: 10,
           ),

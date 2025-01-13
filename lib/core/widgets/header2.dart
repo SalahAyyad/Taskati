@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:taskati/core/utils/textstyle.dart';
 
-class header extends StatelessWidget {
-  const header({
+class header2 extends StatelessWidget {
+  const header2({
     super.key,
     required this.title,
     required this.subtitle,
@@ -23,15 +23,13 @@ class header extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ValueListenableBuilder(valueListenable: Hive.box("user").listenable(), builder: (context, Box box, _) {
-              String title = box.get("name") ?? '';
-              return  Text('Hello, $title',
+              Text( title,
               
                 style: getTiltleTextStyle(fontSize: 20),
-              );
-            }
+              ),
+            
              
-            ),
+          
             Text(
               subtitle,
               style: getBodyTextStyle(fontSize: 20),

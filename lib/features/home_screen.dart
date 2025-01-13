@@ -14,6 +14,8 @@ import 'package:taskati/core/widgets/custome_button.dart';
 import 'package:taskati/core/widgets/header.dart';
 import 'package:intl/intl.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:taskati/core/widgets/header2.dart';
+import 'package:taskati/core/widgets/profile_pic.dart';
 import 'package:taskati/core/widgets/taskitem.dart';
 import 'package:taskati/features/add_task.dart';
 import 'package:taskati/features/profile_page.dart';
@@ -53,19 +55,24 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               header(
                 title: 'Hello, $name',
+                subtitle: 'Have a nice day!',
                 customeWidget: GestureDetector(
                   onTap: () {
                     pushTo(context, ProfilePage());
                   },
-                  child: CircleAvatar(
-                    radius: 45,
-                    backgroundImage: FileImage(File(path)),
+                  child: ValueListenableBuilder(valueListenable: userBox.listenable(),
+                  builder: (context, Box box, _) {
+                    String path = box.get("image") ?? '';
+                    return profilePic(path: path);
+                  },
+                   
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              header(
+              header2(
                 title: DateFormat("dd MMM yyyy").format(DateTime.now()),
+                subtitle: 'Your tasks for today',
                 customeWidget: customeButton(
                   width: 135,
                   onPressed: () {
@@ -123,12 +130,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     isCompleted: true,
                                   );
 
-                                  taskBox.delete(task);
+                                  taskBox.deleteAt(index);
 
                                   Hive.box<TaskModel>('completed_tasks')
                                       .put(newTask.id, newTask);
                                 } else {
-                                  taskBox.delete(task);
+                                  taskBox.deleteAt(index);
                                 }
                               },
                               background: Container(

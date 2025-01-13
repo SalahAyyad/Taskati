@@ -12,6 +12,8 @@ class CompletedTasks extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         leading: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios,
+            color: AppColor.whitecolor, size: 20)),
         title: Text(
           'Completed tasks',
           style: getTiltleTextStyle(
@@ -23,7 +25,7 @@ class CompletedTasks extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: ValueListenableBuilder(
-            valueListenable: Hive.box<TaskModel>('completed_taskes').listenable(),
+            valueListenable: Hive.box<TaskModel>('completed_tasks').listenable(),
             builder: (context, Box taskBox, child) {
               var tasks = taskBox.values.toList();
               

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -55,6 +54,8 @@ bool isBefore(TimeOfDay time1, TimeOfDay time2) {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios,
+            color: AppColor.whitecolor, size: 20)),
         title: Text(
           'Add Task',
           style: getBodyTextStyle(color: AppColor.whitecolor, fontSize: 16),
